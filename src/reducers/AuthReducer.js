@@ -4,6 +4,7 @@ import {
   HOSU_CHANGED,
   DONG_AUTH_CHANGED,
   NICKNAME_CHANGED,
+  EMAIL_CHANGED,
   PASSWORD_CHANGED,
   PASSWORD_CHECK_CHANGED,
   SIGNIN_USER,
@@ -17,6 +18,7 @@ import {
    hosu: '',
    dong_auth: '',
    nickname: '',
+   email: '',
    password: '',
    password_check: '',
    loading: false,
@@ -36,6 +38,8 @@ import {
         return {...state, dong_auth: action.payload};
     case NICKNAME_CHANGED:
       return {...state, nickname: action.payload};
+    case EMAIL_CHANGED:
+      return {...state, email: action.payload};
     case PASSWORD_CHANGED:
       return {...state, password: action.payload};
     case PASSWORD_CHECK_CHANGED:
@@ -44,11 +48,10 @@ import {
     case SIGNIN_USER:
       return {...state, loading: true};
 
-
     case SIGNIN_USER_SUCCESS:
       return {...state, ...INITIAL_STATE };
     case SIGNIN_USER_FAIL:
-      return {...state, dong: '', loading: false};
+      return {...state, dong_auth: '', loading: false};
 
     default:
       return state;

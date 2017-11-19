@@ -3,7 +3,17 @@ import { View, Text, Dimensions } from 'react-native';
 import { Card, CardSection, Button, Input, Spinner } from './common';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { aptChanged, dongChanged, hosuChanged, dongAuthChanged, nicknameChanged, passwordChanged, passwordCheckChanged, signInUser } from '../actions';
+import {
+  aptChanged,
+  dongChanged,
+  hosuChanged,
+  dongAuthChanged,
+  nicknameChanged,
+  emailChanged,
+  passwordChanged,
+  passwordCheckChanged,
+  signInUser
+} from '../actions';
 
 class Authentication extends Component {
 
@@ -25,6 +35,9 @@ class Authentication extends Component {
   onNicknameChange(text){
     this.props.nicknameChanged(text);
   }
+  onEmailChange(text){
+    this.props.emailChanged(text);
+  }
   onPasswordChange(text){
     this.props.passwordChanged(text);
   }
@@ -33,9 +46,22 @@ class Authentication extends Component {
   }
 
   onButtonPress(){
-    const { apt, dong, hosu, dong_auth, nickname } = this.props;
+    const { apt, dong, hosu, dong_auth, nickname, email, password, password_check } = this.props;
+    if(password === password_check){
+      this.props.signInUser({ apt, dong, hosu, nickname, email, password });
+    }
+  }
 
-    this.props.signInUser({ apt, dong, hosu, dong_auth, nickname });
+  passwordCheck(){
+    if(this.props.password === this.props.password_check){
+      return (
+        <Text style={{color:'green'}}> 비밀번호가 일치합니다 </Text>
+      );
+    } else {
+      return (
+        <Text style={{color:'red'}}> 비밀번호가 일치하지 않습니다 </Text>
+      );
+    }
   }
 
   renderButton(){
@@ -101,6 +127,14 @@ class Authentication extends Component {
 
         <CardSection>
           <Input
+            label="이메일"
+            value={this.props.email}
+            onChangeText={this.onEmailChange.bind(this)}
+          />
+        </CardSection>
+
+        <CardSection>
+          <Input
             label="비밀번호"
             value={this.props.password}
             onChangeText={this.onPasswordChange.bind(this)}
@@ -116,6 +150,10 @@ class Authentication extends Component {
         </CardSection>
 
         <CardSection>
+          {this.passwordCheck()}
+        </CardSection>
+
+        <CardSection>
           {this.renderButton()}
         </CardSection>
 
@@ -126,9 +164,9 @@ class Authentication extends Component {
 }
 
 const mapStateToProps =( state ) => {
-  const { apt, dong, hosu, dong_auth, nickname, password, password_check, loading } = state.auth;
+  const { apt, dong, hosu, dong_auth, nickname, email, password, password_check, loading } = state.auth;
 
-  return { apt, dong, hosu, dong_auth, nickname, password, password_check, loading };
+  return { apt, dong, hosu, dong_auth, nickname, email, password, password_check, loading };
 };
 
 const mapDispatchToProps ={
@@ -137,6 +175,7 @@ const mapDispatchToProps ={
   hosuChanged,
   dongAuthChanged,
   nicknameChanged,
+  emailChanged,
   passwordChanged,
   passwordCheckChanged,
   signInUser

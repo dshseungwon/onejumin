@@ -7,6 +7,7 @@ import {
   HOSU_CHANGED,
   DONG_AUTH_CHANGED,
   NICKNAME_CHANGED,
+  EMAIL_CHANGED,
   PASSWORD_CHANGED,
   PASSWORD_CHECK_CHANGED,
   SIGNIN_USER,
@@ -46,6 +47,12 @@ export const nicknameChanged = (text) => {
     payload: text
   };
 };
+export const emailChanged = (text) => {
+  return {
+    type: EMAIL_CHANGED,
+    payload: text
+  };
+};
 export const passwordChanged = (text) => {
   return {
     type: PASSWORD_CHANGED,
@@ -61,29 +68,37 @@ export const passwordCheckChanged = (text) => {
 // Value changed actions END
 
 
-export const signInUser = ({ apt, dong, hosu, dong_auth, nickname }) => {
+export const signInUser = ({ apt, dong, hosu, nickname, email, password }) => {
   return (dispatch) => {
     dispatch({type: SIGNIN_USER});
-    console.log({ apt, dong, hosu, dong_auth, nickname });
+    console.log({ apt, dong, hosu, nickname, email, password });
 
-    if(dong === '105'){
-      signInUserSuccess(dispatch);
-    }
-    else {
-      signInUserFail(dispatch);
-    }
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(user => signInUserSuccess(dispatch, user, apt, dong, hosu, nickname, email, password))
+      .catch((error) => {
+        console.log(error);
 
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(user => signInUserSuccess(dispatch, user, apt, dong, hosu, nickname, email, password))
+          .catch((error) => {
+            console.log(error);
+            signInUserFail(dispatch);
+          });
+      });
   };
 };
 
-const signInUserSuccess = (dispatch) => {
+const signInUserSuccess = (dispatch, user, apt, dong, hosu, nickname, email, password) => {
+  const { currentUser } = firebase.auth();
 
-  dispatch({
-    type: SIGNIN_USER_SUCCESS
-  });
-
-}
+  firebase.database().ref(`/users/${currentUser.uid}`)
+    .set({ apt, dong, hosu, nickname, email, password})
+    .then(() => {
+      dispatch({ type: SIGNIN_USER_SUCCESS});
+      Actions.main();
+    });
+};
 
 const signInUserFail = (dispatch) => {
   dispatch({type: SIGNIN_USER_FAIL});
-}
+};
