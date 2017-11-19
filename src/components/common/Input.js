@@ -29,7 +29,7 @@ const styles = {
     paddingLeft: 5,
     fontSize: 18,
     lineHeight: 23,
-    flex: 2.5,
+    flex: 2,
 
     borderRadius: 3,
     borderWidth: 1,
