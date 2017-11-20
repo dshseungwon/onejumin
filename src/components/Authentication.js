@@ -112,6 +112,7 @@ class Authentication extends Component {
         <CardSection>
           <Input
             label="동 인증"
+            placeholder="배부된 인증번호 입력"
             value={this.props.dong_auth}
             onChangeText={this.onDongAuthChange.bind(this)}
           />
@@ -120,6 +121,7 @@ class Authentication extends Component {
         <CardSection>
           <Input
             label="닉네임"
+            placeholder="홍길동"
             value={this.props.nickname}
             onChangeText={this.onNicknameChange.bind(this)}
           />
@@ -128,6 +130,7 @@ class Authentication extends Component {
         <CardSection>
           <Input
             label="이메일"
+            placeholder="email@gmail.com"
             value={this.props.email}
             onChangeText={this.onEmailChange.bind(this)}
           />
@@ -136,6 +139,7 @@ class Authentication extends Component {
         <CardSection>
           <Input
             label="비밀번호"
+            placeholder="6자 이상 입력"
             value={this.props.password}
             onChangeText={this.onPasswordChange.bind(this)}
           />

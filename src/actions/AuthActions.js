@@ -70,18 +70,18 @@ export const passwordCheckChanged = (text) => {
 
 export const signInUser = ({ apt, dong, hosu, nickname, email, password }) => {
   return (dispatch) => {
-    dispatch({type: SIGNIN_USER});
+    dispatch({ type: SIGNIN_USER });
     console.log({ apt, dong, hosu, nickname, email, password });
 
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => signInUserSuccess(dispatch, user, apt, dong, hosu, nickname, email, password))
-      .catch((error) => {
-        console.log(error);
+      .catch((signInError) => {
+        console.log(signInError);
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(user => signInUserSuccess(dispatch, user, apt, dong, hosu, nickname, email, password))
-          .catch((error) => {
-            console.log(error);
+          .catch((fatalError) => {
+            console.log(fatalError);
             signInUserFail(dispatch);
           });
       });
@@ -92,13 +92,13 @@ const signInUserSuccess = (dispatch, user, apt, dong, hosu, nickname, email, pas
   const { currentUser } = firebase.auth();
 
   firebase.database().ref(`/users/${currentUser.uid}`)
-    .set({ apt, dong, hosu, nickname, email, password})
+    .set({ apt, dong, hosu, nickname, email, password })
     .then(() => {
-      dispatch({ type: SIGNIN_USER_SUCCESS});
+      dispatch({ type: SIGNIN_USER_SUCCESS });
       Actions.main();
     });
 };
 
 const signInUserFail = (dispatch) => {
-  dispatch({type: SIGNIN_USER_FAIL});
+  dispatch({ type: SIGNIN_USER_FAIL });
 };
