@@ -18,9 +18,9 @@ import {
    hosu: '',
    dong_auth: '',
    nickname: '',
-   email: '',
-   password: '',
-   password_check: '',
+   email: 'asdf@asdf.com',
+   password: 'Password',
+   password_check: 'Password',
    loading: false,
  };
 

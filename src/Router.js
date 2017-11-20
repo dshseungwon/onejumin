@@ -1,10 +1,14 @@
 // Modules
 import React, { Component } from 'react';
-import { Stack, Scene, Router, Actions } from 'react-native-router-flux';
+import { Stack, Scene, Router } from 'react-native-router-flux';
 
 // Screens
 import Intro from './components/Intro';
 import Authentication from './components/Authentication';
+import Main from './components/home/Main';
+import MsgHome from './components/home/Message/MsgHome';
+import MsgWrite from './components/home/Message/MsgWrite';
+import MsgRead from './components/home/Message/MsgRead';
 
 const RouterComponent = () => {
   return (
@@ -19,8 +23,9 @@ const RouterComponent = () => {
 
         <Stack key="auth">
           <Scene
+            title="주민인증"
             component={Authentication}
-            title = "주민인증"
+ 
           />
         </Stack>
 
@@ -29,23 +34,26 @@ const RouterComponent = () => {
           <Scene key="home">
 
             <Scene
-              key="notice_list"
               title="$아파트 이름"
-              component={Intro}
+              component={Main}
             />
 
-            <Scene key="message">
-              <Scene
-                key="message_list"
-                title="쪽지"
-                component={Intro}
-              />
-              <Scene
-                key="message_send"
-                title="쪽지 쓰기"
-                component={Intro}
-              />
-            </Scene>
+            <Scene
+               key="message"
+               title="쪽지"
+               component={MsgHome}
+             />
+             <Scene
+              key="message_write"
+               title="쪽지 쓰기"
+               component={MsgWrite}
+             />
+             <Scene
+               key="message_read"
+               title="$쪽지 타이틀로 refresh"
+               component={MsgRead}
+            />
+
           </Scene>
 
           <Scene key="notice">
@@ -64,6 +72,12 @@ const RouterComponent = () => {
               title="제목 없음"
               component={Intro}
             />
+            <Scene
+              key="contentView"
+              title="제목 없음"
+              component={Intro}
+            />
+            
           </Scene>
 
           <Scene key="proposal">
@@ -79,6 +93,11 @@ const RouterComponent = () => {
             />
             <Scene
               key="proposal_read"
+              title="제목 없음"
+              component={Intro}
+            />
+            <Scene
+              key="contentView"
               title="제목 없음"
               component={Intro}
             />
