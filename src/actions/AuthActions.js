@@ -92,7 +92,7 @@ const signInUserSuccess = (dispatch, user, apt, dong, hosu, nickname, email, pas
   const { currentUser } = firebase.auth();
 
   firebase.database().ref(`/users/${currentUser.uid}`)
-    .set({ apt, dong, hosu, nickname, email, password })
+    .update({ apt, dong, hosu, nickname, email, password })
     .then(() => {
       dispatch({ type: SIGNIN_USER_SUCCESS });
       Actions.main();

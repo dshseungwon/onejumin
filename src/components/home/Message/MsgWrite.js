@@ -22,14 +22,38 @@ class MsgWrite extends Component {
   }
   
   onSendPressed() {
+    this.sendMsgPush();
+    this.recvMsgPush();
+    Actions.pop();
+  }
+
+  sendMsgPush() {
     const { currentUser } = firebase.auth();
     const { dong, hosu, msg } = this.state;
-
+  
     firebase.database().ref(`/users/${currentUser.uid}/message/sendMsg`)
-      .set({ dong, hosu, msg })
+      .push().set({ dong, hosu, msg })
       .then(() => {
-        Actions.pop();
-      });
+        console.log('sendMsg push successed!');
+       });
+  }
+
+  recvMsgPush() {
+    const { dong, hosu, msg } = this.state;
+
+    firebase.database().ref('/users').orderByChild('dong')
+    .on('child_added', (snapshot) => {
+      const dongFiltered = { ...snapshot.val(), uid: snapshot.key };
+      console.log(dongFiltered);
+
+      if (dongFiltered.hosu === `${hosu}`) {
+        console.log(dongFiltered);
+
+        firebase.database().ref(`/users/${dongFiltered.uid}/message/recvMsg`)
+        .push().set({ dong, hosu, msg });
+        console.log('recvMsg push successed!');
+      }
+    });
   }
 
   render() {

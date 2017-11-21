@@ -14,7 +14,7 @@ class MsgList extends Component {
     } else {
       this.props.sendMsgFetch();
     }
-
+    
     this.createDataSource(this.props);
   }
 
