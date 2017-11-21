@@ -31,12 +31,29 @@ export const postFetch = (category) => {
 
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
-      const aptid = userSnap.val().aptid;
+      const apt = userSnap.val().apt;
 
-      firebase.database().ref(`/apts/${aptid}/${category}`)
+      firebase.database().ref(`/apts/${apt}/${category}`)
       .on('value', postSnap => {
         dispatch({ type: FETCH_SUCCESS, payload: postSnap.val() });
       });
+    });
+  };
+};
+
+export const postPush = (category) => {
+  const { uid } = firebase.auth().currentUser;
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
+      const apt = userSnap.val().apt;
+
+      firebase.database().ref(`/apts/${apt}/${category}`)
+      .push().set({ title, content })
+      .then(() => {
+        console.log('Notice push successed!');
+       });
+
     });
   };
 };

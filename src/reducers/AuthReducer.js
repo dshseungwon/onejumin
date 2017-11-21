@@ -13,12 +13,12 @@ import {
 } from '../actions/types';
 
  const INITIAL_STATE = {
-   apt: '',
-   dong: '',
-   hosu: '',
-   dong_auth: '',
-   nickname: '',
-   email: 'asdf@asdf.com',
+   apt: 'hansin',
+   dong: '123',
+   hosu: '321',
+   dong_auth: 'dauth',
+   nickname: 'Seungwon Ju',
+   email: 'Newuser@gmail.com',
    password: 'Password',
    password_check: 'Password',
    loading: false,

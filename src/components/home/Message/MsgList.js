@@ -9,12 +9,16 @@ import { sendMsgFetch, recvMsgFetch } from '../../../actions';
 class MsgList extends Component {
 
   componentWillMount() {
+    console.log('componentMounted!');
+
     if (this.props.type === true) {
       this.props.recvMsgFetch();
+      console.log('recvMsgFetch');
     } else {
       this.props.sendMsgFetch();
+      console.log('sendMsgFetch');
     }
-    
+
     this.createDataSource(this.props);
   }
 
@@ -23,6 +27,15 @@ class MsgList extends Component {
     // will be rendered with
     // this.props is still the old set of props
 
+    if (this.props.type !== nextProps.type) {
+      if (nextProps.type === true) {
+        nextProps.recvMsgFetch();
+        console.log('recvMsgFetch');
+      } else {
+        nextProps.sendMsgFetch();
+        console.log('sendMsgFetch');
+      }
+    }
     this.createDataSource(nextProps);
   }
 
@@ -35,13 +48,11 @@ class MsgList extends Component {
 
 
   renderRow(msg) {
-    return <ListItem msg={msg} />;
+    return <ListItem post={msg} isMsg />;
   }
 
 
   render() {
-    console.log(this.props);
-
     return (
       <ListView
         enableEmptySections
@@ -53,8 +64,9 @@ class MsgList extends Component {
 }
 
 const mapStateToProps = state => {
-  const msgs = _.map(state.postfetch, (val, msgId) => {
-    return { ...val, msgId };
+
+  const msgs = _.map(state.postfetch, (val) => {
+    return { ...val };
   });
 
   return { msgs };

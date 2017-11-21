@@ -3,21 +3,27 @@ import { Actions } from 'react-native-router-flux';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { CardSection } from './common';
 
+
 class ListItem extends Component {
 
   onRowPress() {
-    // Actions.contentView({ post: this.props.post });
+    Actions.contentView({ post: this.props.post });
   }
 
   render() {
-    const { msg } = this.props.msg;
+    let title = '';
+    if (this.props.isMsg === true) {
+      title = this.props.post.msg;
+    } else {
+      title = this.props.post.title;
+    }
 
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View>
           <CardSection>
             <Text style={styles.titleStyle}>
-              {msg}
+              {title}
             </Text>
           </CardSection>
         </View>

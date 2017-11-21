@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 
 class Intro extends Component {
 
-  render () {
+  render() {
     return (
       <Card>
 

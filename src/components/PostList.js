@@ -9,8 +9,9 @@ import { postFetch } from '../actions';
 class PostList extends Component {
 
   componentWillMount() {
-    // Category에 따라 바꿔야 함!
-    this.props.postFetch('freeBoard');
+    const { category } = this.props;
+    
+    this.props.postFetch(category);
 
     this.createDataSource(this.props);
   }

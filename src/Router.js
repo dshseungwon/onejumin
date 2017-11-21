@@ -1,14 +1,48 @@
 // Modules
-import React, { Component } from 'react';
-import { Stack, Scene, Router } from 'react-native-router-flux';
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { Stack, Scene, Router, Actions } from 'react-native-router-flux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Screens
 import Intro from './components/Intro';
 import Authentication from './components/Authentication';
+
 import Main from './components/home/Main';
 import MsgHome from './components/home/Message/MsgHome';
 import MsgWrite from './components/home/Message/MsgWrite';
 import MsgRead from './components/home/Message/MsgRead';
+
+import MyPage from './components/myPage/MyPage';
+
+
+import NoticeHome from './components/notice/NoticeHome';
+import NoticeRead from './components/notice/NoticeRead';
+import NoticeWrite from './components/notice/NoticeWrite';
+
+import ContentView from './components/ContentView';
+
+
+const LeftNavButton = ({ onPress, iconName }) => {
+  return (
+    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 20 }}>
+      <TouchableOpacity onPress={onPress}>
+        <Ionicons size={35} name={iconName} color="#000000" />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const RightNavButton = ({ onPress, iconName }) => {
+  return (
+    <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 20 }}>
+      <TouchableOpacity onPress={onPress}>
+        <Ionicons size={35} name={iconName} color="#000000" />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
 
 const RouterComponent = () => {
   return (
@@ -29,55 +63,58 @@ const RouterComponent = () => {
           />
         </Stack>
 
-        <Scene key="main" hideNavBar>
+        <Stack key="main" hideNavBar>
 
           <Scene key="home">
-
             <Scene
+              initial
               title="$아파트 이름"
               component={Main}
+              renderLeftButton={() =>
+                <LeftNavButton onPress={() => Actions.myPage()} iconName='ios-settings-outline' />
+              }
+              renderRightButton={() =>
+                <RightNavButton onPress={() => Actions.message()} iconName='ios-mail-outline' />
+              }
             />
-
             <Scene
                key="message"
                title="쪽지"
                component={MsgHome}
-             />
-             <Scene
-              key="message_write"
-               title="쪽지 쓰기"
-               component={MsgWrite}
-             />
-             <Scene
-               key="message_read"
-               title="$쪽지 타이틀로 refresh"
-               component={MsgRead}
             />
-
+            <Scene
+              key="message_write"
+              title="쪽지 쓰기"
+              component={MsgWrite}
+            />
+            <Scene
+              key="message_read"
+              title="$쪽지 타이틀로 refresh"
+              component={MsgRead}
+            />
           </Scene>
 
           <Scene key="notice">
             <Scene
-              key="notice_list"
+              initial
               title="공지사항"
-              component={Intro}
+              component={NoticeHome}
             />
             <Scene
               key="notice_write"
               title="글 쓰기"
-              component={Intro}
+              component={NoticeWrite}
             />
             <Scene
               key="notice_read"
-              title="제목 없음"
-              component={Intro}
+              title="$제목 없음"
+              component={NoticeRead}
             />
             <Scene
               key="contentView"
-              title="제목 없음"
-              component={Intro}
+              title="$제목 없음"
+              component={ContentView}
             />
-            
           </Scene>
 
           <Scene key="proposal">
@@ -93,13 +130,13 @@ const RouterComponent = () => {
             />
             <Scene
               key="proposal_read"
-              title="제목 없음"
+              title="$제목 없음"
               component={Intro}
             />
             <Scene
               key="contentView"
-              title="제목 없음"
-              component={Intro}
+              title="$제목 없음"
+              component={ContentView}
             />
           </Scene>
 
@@ -160,9 +197,9 @@ const RouterComponent = () => {
           <Scene key="myPage">
 
             <Scene
-              key="myPage_list"
+              initial
               title="마이페이지"
-              component={Intro}
+              component={MyPage}
             />
             <Scene
               key="myPage_exit"
@@ -196,7 +233,7 @@ const RouterComponent = () => {
             />
           </Scene>
 
-        </Scene>
+        </Stack>
 
       </Stack>
     </Router>
