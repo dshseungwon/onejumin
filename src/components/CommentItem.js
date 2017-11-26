@@ -4,19 +4,15 @@ import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { CardSection } from './common';
 
 
-class ListItem extends Component {
-
-  onRowPress() {
-    Actions.contentView({ post: this.props.post, category: this.props.category });
-  }
+class CommentItem extends Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
+      <TouchableWithoutFeedback>
         <View>
           <CardSection>
             <Text style={styles.titleStyle}>
-              {this.props.post.title}
+              {this.props.comment.content}
             </Text>
           </CardSection>
         </View>
@@ -32,4 +28,4 @@ const styles = {
   }
 };
 
-export default ListItem;
+export default CommentItem;

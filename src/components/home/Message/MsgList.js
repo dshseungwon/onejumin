@@ -3,7 +3,7 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import ListItem from '../../ListItem';
+import MsgItem from './MsgItem';
 import { sendMsgFetch, recvMsgFetch } from '../../../actions';
 
 class MsgList extends Component {
@@ -48,7 +48,7 @@ class MsgList extends Component {
 
 
   renderRow(msg) {
-    return <ListItem post={msg} isMsg />;
+    return <MsgItem msg={msg} />;
   }
 
 

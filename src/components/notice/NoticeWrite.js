@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 
+import { postPush } from '../../actions';
 import { Button, Input, Card, CardSection } from '../common';
 
 class NoticeWrite extends Component {
@@ -24,19 +26,8 @@ class NoticeWrite extends Component {
   }
 
   NoticePush() {
-    const uid = firebase.auth().currentUser.uid;
-    const { title, content } = this.state;
     const category = this.props.category;
-  
-    firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
-      const apt = userSnap.val().apt;
-
-      firebase.database().ref(`/apts/${apt}/${category}`)
-       .push().set({ title, content })
-       .then(() => {
-         console.log('Notice push successed!');
-       });
-      });
+    this.props.postPush(category, this.state);
   }
 
   render() {
@@ -73,4 +64,4 @@ class NoticeWrite extends Component {
   }
 }
 
-export default NoticeWrite;
+export default connect(null, { postPush })(NoticeWrite);

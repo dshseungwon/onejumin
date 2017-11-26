@@ -12,3 +12,4 @@ export const SIGNIN_USER_SUCCESS = 'signin_user_success';
 export const SIGNIN_USER_FAIL = 'signin_user_fail';
 
 export const FETCH_SUCCESS = 'fetch_success';
+export const COMMENT_FETCH_SUCCESS = 'comment_fetch_success';

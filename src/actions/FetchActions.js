@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 
 import {
-  FETCH_SUCCESS
+  FETCH_SUCCESS,
+  COMMENT_FETCH_SUCCESS,
 } from './types';
 
 export const sendMsgFetch = () => {
@@ -41,8 +42,9 @@ export const postFetch = (category) => {
   };
 };
 
-export const postPush = (category) => {
+export const postPush = (category, post) => {
   const { uid } = firebase.auth().currentUser;
+  const { title, content } = post;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
@@ -53,7 +55,41 @@ export const postPush = (category) => {
       .then(() => {
         console.log('Notice push successed!');
        });
+    });
+  };
+};
 
+export const commentFetch = (category, postId) => {
+
+  const { uid } = firebase.auth().currentUser;
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
+      const apt = userSnap.val().apt;
+
+      firebase.database().ref(`/apts/${apt}/${category}/${postId}/comments`)
+      .on('value', commentSnap => {
+        dispatch({ type: COMMENT_FETCH_SUCCESS, payload: commentSnap.val() });
+      });
+    });
+  };
+};
+
+
+export const commentPush = (category, postId, comment) => {
+
+  const { uid } = firebase.auth().currentUser;
+  const { content } = comment;
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
+      const apt = userSnap.val().apt;
+
+      firebase.database().ref(`/apts/${apt}/${category}/${postId}/comments`)
+      .push().set({ content })
+        .then(() => {
+          console.log('Comment push successed!');
+        });
     });
   };
 };

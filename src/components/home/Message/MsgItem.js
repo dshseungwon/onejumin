@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { Text, TouchableWithoutFeedback, View } from 'react-native';
-import { CardSection } from './common';
+import { CardSection } from '../../common';
 
 
-class ListItem extends Component {
+class MsgItem extends Component {
 
   onRowPress() {
-    Actions.contentView({ post: this.props.post, category: this.props.category });
+    Actions.message_write({ post: this.props.msg });
   }
 
   render() {
+    const { msg } = this.props.msg;
+    
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
         <View>
           <CardSection>
             <Text style={styles.titleStyle}>
-              {this.props.post.title}
+              {msg}
             </Text>
           </CardSection>
         </View>
@@ -32,4 +34,4 @@ const styles = {
   }
 };
 
-export default ListItem;
+export default MsgItem;

@@ -3,15 +3,15 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import ListItem from './ListItem';
-import { postFetch } from '../actions';
+import CommentItem from './CommentItem';
+import { commentFetch } from '../actions';
 
-class PostList extends Component {
+class CommentList extends Component {
 
   componentWillMount() {
-    const { category } = this.props;
+    const { category, postId } = this.props;
     
-    this.props.postFetch(category);
+    this.props.commentFetch(category, postId);
 
     this.createDataSource(this.props);
   }
@@ -24,36 +24,37 @@ class PostList extends Component {
     this.createDataSource(nextProps);
   }
 
-  createDataSource({ posts }) {
+  createDataSource({ comments }) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.dataSource = ds.cloneWithRows(posts);
+    this.dataSource = ds.cloneWithRows(comments);
   }
 
 
-  renderRow(post) {
-    return <ListItem post={post} category={this.props.category} />;
+  renderRow(comment) {
+    return <CommentItem comment={comment} />;
   }
 
 
   render() {
+
     return (
       <ListView
         enableEmptySections
         dataSource={this.dataSource}
-        renderRow={this.renderRow.bind(this)}
+        renderRow={this.renderRow}
       />
     );
   }
 }
 
 const mapStateToProps = state => {
-  const posts = _.map(state.postfetch, (val, postId) => {
-    return { ...val, postId };
+  const comments = _.map(state.cmtfetch, (val, cmtId) => {
+    return { ...val, cmtId };
   });
 
-  return { posts };
+  return { comments };
 };
 
-export default connect(mapStateToProps, { postFetch })(PostList);
+export default connect(mapStateToProps, { commentFetch })(CommentList);

@@ -8,6 +8,11 @@ import { Button, Input, Card, CardSection } from '../../common';
 class MsgWrite extends Component {
 
   state = { dong: '', hosu: '', msg: '' };
+  componentWillMount() {
+    if (this.props.post !== undefined) {
+      this.setState({ dong: this.props.post.dong, hosu: this.props.post.hosu });
+    }
+  }
 
   onDongChange(text) {
     this.setState({ dong: text });
@@ -57,6 +62,7 @@ class MsgWrite extends Component {
   }
 
   render() {
+    console.log(this.props.post);
     return (
       <Card >
         <CardSection style={{ height: 50, flexDirection: 'row', justifyContent: 'space-around' }}>
