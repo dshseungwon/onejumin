@@ -16,7 +16,7 @@ import {
    apt: 'hansin',
    dong: '123',
    hosu: '321',
-   dong_auth: 'dauth',
+   dong_auth: '123000',
    nickname: 'Seungwon Ju',
    email: 'Newuser@gmail.com',
    password: 'Password',
