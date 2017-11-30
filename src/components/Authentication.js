@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { CheckBox } from "react-native-elements";
-import { Card, CardSection, Button, Input, Spinner, DoubleInput } from "./common";
+import { Card, CardSection, Button, Input, Spinner, DoubleInput, Confirm } from "./common";
 import { connect } from "react-redux";
 import {
   aptChanged,
@@ -16,7 +16,7 @@ import {
 } from "../actions";
 
 class Authentication extends Component {
-  state = { checked: false };
+  state = { checked: false, showModal: false, dongAuthCheck: false };
 
   //TEMPORARY
   onAptChange(text) {
@@ -46,6 +46,14 @@ class Authentication extends Component {
     this.props.passwordCheckChanged(text);
   }
 
+  onAccept() {
+    this.setState({ checked: true, showModal: false });
+  }
+
+  onDecline() {
+    this.setState({ showModal: false });
+  }
+
   onButtonPress() {
     const {
       apt,
@@ -58,14 +66,22 @@ class Authentication extends Component {
       password_check
     } = this.props;
     if (password === password_check) {
-      this.props.signInUser({ apt, dong, hosu, nickname, email, password });
+      if (this.state.dongAuthCheck) {
+        if (this.state.checked) {
+          this.props.signInUser({ apt, dong, hosu, nickname, email, password });
+        } else {
+          this.setState({ showModal: true });
+        }
+      }
     }
   }
 
   dongAuthCheck() {
     if (this.props.dong_auth === this.props.dong.concat("000")) {
+      this.state.dongAuthCheck = true;
       return <Text style={{ color: "green" }}> 인증번호가 일치합니다 </Text>;
     } else {
+      this.state.dongAuthCheck = false;
       return (
         <Text style={{ color: "red" }}> 인증번호가 일치하지 않습니다 </Text>
       );
@@ -184,6 +200,14 @@ class Authentication extends Component {
           onPress={() => this.setState({ checked: !this.state.checked })}
         />
         {this.renderButton()}
+
+        <Confirm
+          visible={this.state.showModal}
+          onAccept={this.onAccept.bind(this)}
+          onDecline={this.onDecline.bind(this)}
+        >
+          약관에 동의해주세요
+        </Confirm>
 
       </View>
     );

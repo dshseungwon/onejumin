@@ -17,7 +17,7 @@ class MsgHome extends Component {
         <View style={{ height: 50, flexDirection: 'row', justifyContent: 'space-around' }}>
           <Button onPress={() => this.setState({ isRecv: true })}>수신</Button>
           <Button onPress={() => this.setState({ isRecv: false })}>발신</Button>
-          <Button onPress={Actions.message_write}>작성</Button>
+          <Button onPress={Actions.msgSend}>작성</Button>
         </View>
 
         <MsgList type={isRecv} />

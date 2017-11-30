@@ -12,7 +12,7 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
     <Modal
       visible={visible}
       transparent
-      animationType="slide"
+      animationType="fade"
       onRequestClose={() => {}}
     >
       <View style={containerStyle}>
@@ -23,8 +23,8 @@ const Confirm = ({ children, visible, onAccept, onDecline }) => {
         </CardSection>
 
         <CardSection>
-          <Button onPress={onAccept}>Yes</Button>
-          <Button onPress={onDecline}>No</Button>
+          <Button onPress={onAccept}>동의</Button>
+          <Button onPress={onDecline}>반대</Button>
         </CardSection>
       </View>
     </Modal>

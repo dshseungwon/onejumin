@@ -7,7 +7,7 @@ import { CardSection } from '../../common';
 class MsgItem extends Component {
 
   onRowPress() {
-    Actions.message_write({ post: this.props.msg });
+    Actions.msgSend({ post: this.props.msg });
   }
 
   render() {
