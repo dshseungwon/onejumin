@@ -35,7 +35,7 @@ const LeftNavButton = ({ onPress, iconName }) => {
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 20 }}>
       <TouchableOpacity onPress={onPress}>
-        <Ionicons size={35} name={iconName} color="#000000" />
+        <Ionicons size={35} name={iconName} color='white' />
       </TouchableOpacity>
     </View>
   );
@@ -45,7 +45,7 @@ const RightNavButton = ({ onPress, iconName }) => {
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center', marginRight: 20 }}>
       <TouchableOpacity onPress={onPress}>
-        <Ionicons size={35} name={iconName} color="#000000" />
+        <Ionicons size={35} name={iconName} color='white' />
       </TouchableOpacity>
     </View>
   );
@@ -54,7 +54,7 @@ const RightNavButton = ({ onPress, iconName }) => {
 
 const RouterComponent = () => {
   return (
-    <Router>
+    <Router navigationBarStyle={{ backgroundColor: '#ffdd3f' }}>
       <Stack hideNavBar>
 
         <Scene
