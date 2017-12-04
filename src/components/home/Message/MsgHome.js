@@ -13,7 +13,7 @@ class MsgHome extends Component {
     const { isRecv } = this.state;
 
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <View style={{ height: 50, flexDirection: 'row', justifyContent: 'space-around' }}>
           <Button onPress={() => this.setState({ isRecv: true })}>수신</Button>
           <Button onPress={() => this.setState({ isRecv: false })}>발신</Button>
