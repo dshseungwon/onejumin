@@ -44,14 +44,18 @@ export const postFetch = (category) => {
 
 export const postPush = (category, post) => {
   const { uid } = firebase.auth().currentUser;
-  const { title, content } = post;
+  const { title, content, time } = post;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
+      const dong = userSnap.val().dong;
       const apt = userSnap.val().apt;
+      const nickname = userSnap.val().nickname;
+      const like = 0;
+      const numComments = 0;
 
       firebase.database().ref(`/apts/${apt}/${category}`)
-      .push().set({ title, content })
+      .push().set({ title, content, time, nickname, like, numComments, dong })
       .then(() => {
         console.log('Notice push successed!');
        });
@@ -76,7 +80,7 @@ export const commentFetch = (category, postId) => {
 };
 
 
-export const commentPush = (category, postId, comment) => {
+export const commentPush = (category, postId, comment, numComments) => {
 
   const { uid } = firebase.auth().currentUser;
   const { content } = comment;
@@ -90,6 +94,12 @@ export const commentPush = (category, postId, comment) => {
         .then(() => {
           console.log('Comment push successed!');
         });
+
+      firebase.database().ref(`/apts/${apt}/${category}/${postId}`)
+      .update({ numComments: numComments + 1 })
+        .then(() => {
+          console.log('numComments push successed!');
+         });
     });
   };
 };

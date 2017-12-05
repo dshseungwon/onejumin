@@ -9,7 +9,15 @@ import { Button, Input, Card, CardSection } from '../common';
 
 class NoticeWrite extends Component {
 
-  state = { title: '', content: '' };
+  state = { title: '', content: '', time: '' };
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        time: new Date().toLocaleString('ko-KR')
+      });
+    }, 1000);
+  }
 
   onTitleChange(text) {
     this.setState({ title: text });

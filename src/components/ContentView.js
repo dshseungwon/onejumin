@@ -18,7 +18,7 @@ class ContentView extends Component {
   
   onSendPressed() {
     const category = this.props.category;
-    this.props.commentPush(category, this.props.post.postId, this.state);
+    this.props.commentPush(category, this.props.post.postId, this.state, this.props.post.numComments);
     this.setState({ content: '' });
   }
 

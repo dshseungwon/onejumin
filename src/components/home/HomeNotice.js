@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-const HomeNotice = ({ onPress, iconName, style }) => {
+const HomeNotice = ({ iconName, style }) => {
   const { buttonStyle, iconStyle, titleTextStyle, innerBoxStyle } = styles;
 
   return (
-      <TouchableOpacity onPress={onPress} style={[buttonStyle, style]}>
+      <View style={[buttonStyle, style]}>
        <View style={{ justifyContent: 'space-around', flexDirection: 'column' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 5, marginTop: 2, marginBottom: 2 }}>
             <Ionicons size={35} name={iconName} color="gray" style={iconStyle} />
@@ -18,7 +18,7 @@ const HomeNotice = ({ onPress, iconName, style }) => {
             <Text style={{ marginTop: 3 }}> Something </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
   );
 };
 

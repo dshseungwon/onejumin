@@ -14,7 +14,7 @@ class NoticeHome extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#f9f8e9' }}>
         <View style={styles.infoStyle}>
           <Ionicons size={25} name={'ios-information-circle-outline'} color="gray" style={{ marginLeft: 5 }} />
           <Text style={{ marginLeft: 5, marginRight: 30, fontSize: 18, color: '#565552', fontWeight: '500' }}>

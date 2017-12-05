@@ -35,8 +35,7 @@ class Main extends Component {
       <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingTop: 10, paddingBottom: 10, backgroundColor: '#f9f8e9' }} >
 
         <View style={{ marginLeft: 5, marginRight: 2, marginTop: 10, marginBottom: 15, alignItems: 'stretch', justifyContent: 'space-around', flexDirection: 'row' }}>
-          <HomeNotice 
-            onPress={Actions.notice}
+          <HomeNotice
             iconName='ios-information-circle-outline'
             style={{ backgroundColor: '#fcea95' }}
           />

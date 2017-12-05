@@ -175,7 +175,7 @@ const RouterComponent = () => {
             />
             <Scene
               key="contentView"
-              title="$제목 없음"
+              title="공지사항"
               component={ContentView}
             />
           </Scene>

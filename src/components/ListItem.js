@@ -15,38 +15,43 @@ class ListItem extends Component {
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
 
         <View style={styles.cardStyle}>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', marginBottom: 5 }}>
             <Image
               style={{ width: 50, height: 50, marginLeft: 10, marginRight: 10 }}
               source={require('../images/googleFav.png')}
             />
             <View style={{ flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
-              <View style={{ flexDirection: 'row', backgroundColor: 'red' }} >
-                <Text style={{ alignSelf: 'flex-start' }}>정수연</Text> 
-                <View style={{ backgroundColor: 'blue', justifyContent: 'flex-end', flexDirection: 'row', flex: 1 }}>
+              <View style={{ flexDirection: 'row' }} >
+                <Text style={{ alignSelf: 'flex-start' }}>
+                  {this.props.post.nickname}
+                </Text> 
+                <View style={{ justifyContent: 'flex-end', flexDirection: 'row', flex: 1, alignItems: 'center' }}>
                   <Image
-                    style={{ width: 10, height: 10 }}
+                    style={{ width: 20, height: 20, paddingRight: 10 }}
                     source={require('../images/googleFav.png')}
                   />
-                  <Text>9</Text>
+                  <Text style={{ paddingRight: 13, color: '#a3a3a2', fontSize: 19, fontWeight: '500' }}>{this.props.post.numComments}</Text>
                   <Image
-                    style={{ width: 10, height: 10 }}
+                    style={{ width: 20, height: 20, paddingRight: 10 }}
                     source={require('../images/googleFav.png')}
                   />
-                  <Text>29</Text>
+                  <Text style={{ paddingRight: 10, color: '#a3a3a2', fontSize: 19, fontWeight: '500' }}>{this.props.post.like}</Text>
                 </View>
               </View>
               <View style={{ flexDirection: 'row' }}>
-                <Text style={{ alignSelf: 'flex-start' }}>10/2 18:03</Text>
-                <Text style={{ alignSelf: 'flex-end' }}>더보기</Text>
+                <Text style={{ alignSelf: 'flex-start' }}>{
+                  this.props.post.time}
+                </Text>
               </View>
             </View>
           </View>
 
           <View style={{ marginLeft: 10 }}>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', marginRight: 15 }}> 101동 </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', marginRight: 15 }}>
+                {this.props.post.dong}동
+              </Text>
               <Text style={styles.titleStyle}>
                 {this.props.post.title}
               </Text>

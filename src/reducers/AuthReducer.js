@@ -13,7 +13,7 @@ import {
 } from '../actions/types';
 
  const INITIAL_STATE = {
-   apt: 'hansin',
+   apt: '푸르지오',
    dong: '123',
    hosu: '321',
    dong_auth: '123000',
