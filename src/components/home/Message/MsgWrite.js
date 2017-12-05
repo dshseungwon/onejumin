@@ -45,6 +45,15 @@ class MsgWrite extends Component {
 
   recvMsgPush() {
     const { dong, hosu, msg } = this.state;
+    const { uid } = firebase.auth().currentUser;
+
+    let senderDong = '999';
+    let senderHosu = '999';
+
+    firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
+      senderDong = userSnap.val().dong;
+      senderHosu = userSnap.val().hosu;
+    });
 
     firebase.database().ref('/users').orderByChild('dong')
     .on('child_added', (snapshot) => {
@@ -55,7 +64,7 @@ class MsgWrite extends Component {
         console.log(dongFiltered);
 
         firebase.database().ref(`/users/${dongFiltered.uid}/message/recvMsg`)
-        .push().set({ dong, hosu, msg });
+        .push().set({ dong: senderDong, hosu: senderHosu, msg });
         console.log('recvMsg push successed!');
       }
     });

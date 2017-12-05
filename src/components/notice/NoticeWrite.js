@@ -12,11 +12,9 @@ class NoticeWrite extends Component {
   state = { title: '', content: '', time: '' };
 
   componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        time: new Date().toLocaleString('ko-KR')
-      });
-    }, 1000);
+    this.setState({
+      time: new Date().toLocaleString('ko-KR')
+    });
   }
 
   onTitleChange(text) {
@@ -29,6 +27,9 @@ class NoticeWrite extends Component {
   
   
   onSendPressed() {
+    this.setState({
+      time: new Date().toLocaleString('ko-KR')
+    });
     this.NoticePush();
     Actions.pop();
   }
