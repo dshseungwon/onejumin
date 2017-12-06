@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Image, ScrollView } from 'react-native';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -20,6 +20,16 @@ class ContentView extends Component {
     const category = this.props.category;
     this.props.commentPush(category, this.props.post.postId, this.state, this.props.post.numComments);
     this.setState({ content: '' });
+  }
+
+  imageCheck() {
+    if (this.props.post.numImage !== 0) {
+      return this.props.post.images.map(x =>
+        <Image key={x.uri} source={x} style={{ width: 100, height: 100, marginTop: 5, marginBottom: 5, marginRight: 5 }} />
+      );
+    } else {
+      return;
+    }
   }
 
   render() {
@@ -48,6 +58,12 @@ class ContentView extends Component {
         </CardSection>
 
         <CardSection>
+          <ScrollView horizontal>
+            {this.imageCheck()}
+          </ScrollView>
+        </CardSection>
+
+        <CardSection>
           <Button onPress={this.onSendPressed.bind(this)}>코멘트 전송</Button>
         </CardSection>
 
@@ -56,6 +72,8 @@ class ContentView extends Component {
         </CardSection>
 
       </Card>
+
+
     );
   }
 }

@@ -44,7 +44,7 @@ export const postFetch = (category) => {
 
 export const postPush = (category, post) => {
   const { uid } = firebase.auth().currentUser;
-  const { title, content, time } = post;
+  const { title, content, time, images, numImage } = post;
 
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
@@ -55,7 +55,7 @@ export const postPush = (category, post) => {
       const numComments = 0;
 
       firebase.database().ref(`/apts/${apt}/${category}`)
-      .push().set({ title, content, time, nickname, like, numComments, dong })
+      .push().set({ title, content, time, nickname, like, numComments, dong, images, numImage })
       .then(() => {
         console.log('Notice push successed!');
        });

@@ -81,11 +81,11 @@ class Authentication extends Component {
   dongAuthCheck() {
     if (this.props.dong_auth === this.props.dong.concat("000")) {
       this.state.dongAuthCheck = true;
-      return <Text style={{ color: "green" }}> 인증번호가 일치합니다 </Text>;
+      return <Text style={{ color: "green" }}> 인증에 성공하였습니다 </Text>;
     } else {
       this.state.dongAuthCheck = false;
       return (
-        <Text style={{ color: "red" }}> 인증번호가 일치하지 않습니다 </Text>
+        <Text style={{ color: "red" }}> 인증에 실패하였습니다 </Text>
       );
     }
   }

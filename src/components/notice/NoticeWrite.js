@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, TouchableOpacity, Dimensions, Image } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Dimensions, Image, ScrollView } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,13 +10,10 @@ import { CardSection } from "../common";
 const ImagePicker = require('react-native-image-picker');
 
 const options = {
-  title: 'HackathonImage', // specify null or empty string to remove the title
-  cancelButtonTitle: 'Cancel',
-  takePhotoButtonTitle: 'Take Photo...', // specify null or empty string to remove this button
-  chooseFromLibraryButtonTitle: 'Choose from Library...', // specify null or empty string to remove this button
-  customButtons: {
-    'Choose Photo from Facebook': 'fb', // [Button Text] : [String returned upon selection]
-  },
+  title: '이미지 첨부', // specify null or empty string to remove the title
+  cancelButtonTitle: '취소',
+  takePhotoButtonTitle: '사진 찍기', // specify null or empty string to remove this button
+  chooseFromLibraryButtonTitle: '사진 보관함', // specify null or empty string to remove this button
   cameraType: 'back', // 'front' or 'back'
   mediaType: 'photo', // 'photo' or 'video'
   aspectX: 2, // android only - aspectX:aspectY, the cropping image's ratio of width to height
@@ -33,7 +30,7 @@ const options = {
 
 
 class NoticeWrite extends Component {
-  state = { title: "", content: "", time: "", hackathonImage : require('../../images/googleFav.png') };
+  state = { title: "", content: "", time: "", images: [], numImage: 0 };
 
   componentDidMount() {
     this.setState({
@@ -68,14 +65,11 @@ class NoticeWrite extends Component {
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      }
-      else if (response.error) {
+      } else if (response.error) {
         console.log('ImagePickerManager Error: ', response.error);
-      }
-      else if (response.customButton) {
+      } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
+      } else {
         // You can display the image using either data:
         const source = { uri: 'data:image/jpeg;base64,' + response.data, isStatic: true };
         //
@@ -84,11 +78,23 @@ class NoticeWrite extends Component {
         // // uri (on android)
         // const source = {uri: response.uri, isStatic: true};
 
+        const tmpArray = this.state.images;
+        tmpArray.push(source);
+        console.log(tmpArray);
+
+
         this.setState({
-          hackathonImage: source
+          images: tmpArray,
+          numImage: this.state.numImage + 1
         });
       }
     });
+  }
+
+  renderImages() {
+    return this.state.images.map(x =>
+      <Image key={x.uri} source={x} style={{ width: 100, height: 100, marginTop: 5, marginBottom: 5, marginRight: 5 }} />
+    );
   }
 
   render() {
@@ -134,12 +140,15 @@ class NoticeWrite extends Component {
             >
               <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                 <Ionicons size={20} name={'ios-add-circle-outline'} color="#929191" style={{ marginRight: 5 }} />
-                <Text style={{ fontSize: 18, fontWeight: '500', color: '#929191' }}> 그림/파일 첨부 </Text>
+                <Text style={{ fontSize: 18, fontWeight: '500', color: '#929191' }}> 그림/사진 첨부 </Text>
               </View>
             </TouchableOpacity>
+            <ScrollView horizontal>
+              {this.renderImages()}
+            </ScrollView>
+
         </CardSection>
 
-        <Image source={this.state.hackathonImage} style={{ width: 50, height: 50 }} />
 
         <TouchableOpacity onPress={this.onSendPressed.bind(this)} style={styles.buttonStyle}>
           <Text style={{ fontSize: 30, fontWeight: '500', color: 'white' }}>
@@ -170,9 +179,9 @@ const styles={
     backgroundColor: '#f9f2d0',
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: '#fbdf5d',
     paddingLeft: 5,
-    paddingRight: 5 
+    paddingRight: 5
   }
 };
 
