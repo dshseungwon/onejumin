@@ -91,7 +91,7 @@ class MsgWrite extends Component {
               onChangeText={this.onHosuChange.bind(this)}
           />
         </CardSection>
-        <CardSection style={{ height: 300 }}>
+        <CardSection >
           <View style={{ flex: 1 }}>
             <TextInput
               multiline
@@ -99,6 +99,7 @@ class MsgWrite extends Component {
               autoCorrect={false}
               value={this.state.msg}
               onChangeText={this.onMsgChange.bind(this)}
+              style={{ height: 300 }}
             />
           </View>
         </CardSection>

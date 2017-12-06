@@ -18,9 +18,9 @@ import {
    hosu: '321',
    dong_auth: '123000',
    nickname: 'Seungwon Ju',
-   email: 'Newuser@gmail.com',
-   password: 'Password',
-   password_check: 'Password',
+   email: 'kusw',
+   password: 'password',
+   password_check: 'password',
    loading: false,
  };
 

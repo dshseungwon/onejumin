@@ -34,7 +34,7 @@ class ContentView extends Component {
           <Text> {this.props.post.content} </Text>
         </CardSection>
 
-        <CardSection style={{ height: 100 }}>
+        <CardSection>
           <View style={{ flex: 1 }}>
             <TextInput
               multiline
@@ -42,6 +42,7 @@ class ContentView extends Component {
               autoCorrect={false}
               value={this.state.content}
               onChangeText={this.onContentChange.bind(this)}
+              style={{ height: 100 }}
             />
           </View>
         </CardSection>

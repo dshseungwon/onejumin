@@ -1,19 +1,43 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { View, Text, TextInput, TouchableOpacity, Dimensions, Image } from "react-native";
+import { Actions } from "react-native-router-flux";
+import { connect } from "react-redux";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { postPush } from '../../actions';
-import { Button, Input, Card, CardSection } from '../common';
+import { postPush } from "../../actions";
+import { CardSection } from "../common";
+
+const ImagePicker = require('react-native-image-picker');
+
+const options = {
+  title: 'HackathonImage', // specify null or empty string to remove the title
+  cancelButtonTitle: 'Cancel',
+  takePhotoButtonTitle: 'Take Photo...', // specify null or empty string to remove this button
+  chooseFromLibraryButtonTitle: 'Choose from Library...', // specify null or empty string to remove this button
+  customButtons: {
+    'Choose Photo from Facebook': 'fb', // [Button Text] : [String returned upon selection]
+  },
+  cameraType: 'back', // 'front' or 'back'
+  mediaType: 'photo', // 'photo' or 'video'
+  aspectX: 2, // android only - aspectX:aspectY, the cropping image's ratio of width to height
+  aspectY: 1, // android only - aspectX:aspectY, the cropping image's ratio of width to height
+  quality: 1, // 0 to 1, photos only
+  angle: 0, // android only, photos only
+  allowsEditing: false, // Built in functionality to resize/reposition the image after selection
+  noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
+  storageOptions: { // if this key is provided, the image will get saved in the documents directory on ios, and the pictures directory on android (rather than a temporary directory)
+    skipBackup: true, // ios only - image will NOT be backed up to icloud
+    path: 'images' // ios only - will save image at /Documents/images rather than the root
+  }
+};
+
 
 class NoticeWrite extends Component {
-
-  state = { title: '', content: '', time: '' };
+  state = { title: "", content: "", time: "", hackathonImage : require('../../images/googleFav.png') };
 
   componentDidMount() {
     this.setState({
-      time: new Date().toLocaleString('ko-KR')
+      time: new Date().toLocaleString("ko-KR")
     });
   }
 
@@ -24,11 +48,10 @@ class NoticeWrite extends Component {
   onContentChange(text) {
     this.setState({ content: text });
   }
-  
-  
+
   onSendPressed() {
     this.setState({
-      time: new Date().toLocaleString('ko-KR')
+      time: new Date().toLocaleString("ko-KR")
     });
     this.NoticePush();
     Actions.pop();
@@ -39,38 +62,118 @@ class NoticeWrite extends Component {
     this.props.postPush(category, this.state);
   }
 
+  _onPressImage() {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePickerManager Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        // You can display the image using either data:
+        const source = { uri: 'data:image/jpeg;base64,' + response.data, isStatic: true };
+        //
+        // // uri (on iOS)
+        // const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        // // uri (on android)
+        // const source = {uri: response.uri, isStatic: true};
+
+        this.setState({
+          hackathonImage: source
+        });
+      }
+    });
+  }
+
   render() {
     return (
-      <Card >
-        <CardSection style={{ height: 100 }}>
-          <View style={{ flex: 1 }}>
-            <TextInput
-              multiline
-              placeholder='제목'
-              autoCorrect={false}
-              value={this.state.title}
-              onChangeText={this.onTitleChange.bind(this)}
-            />
-          </View>
+      <View style={{ backgroundColor: '#f9f8e9', flex: 1 }}>
+        <CardSection style={{ marginTop: 10, marginBottom: 10 }}>
+          <TextInput
+            placeholder="제목"
+            autoCorrect={false}
+            value={this.state.title}
+            onChangeText={this.onTitleChange.bind(this)}
+            style={{
+              height: 30,
+              flex: 1,
+              borderRadius: 5,
+              borderWidth: 2,
+              borderColor: "#f9f2d0",
+              marginTop: 5,
+              marginBottom: 5,
+            }}
+          />
         </CardSection>
 
-        <CardSection style={{ height: 300 }}>
-          <View style={{ flex: 1 }}>
+        <CardSection style={{ marginBottom: 10, flexDirection: 'column' }}>
             <TextInput
               multiline
-              placeholder='내용'
+              placeholder="내용을 입력하세요"
               autoCorrect={false}
               value={this.state.content}
               onChangeText={this.onContentChange.bind(this)}
+              style={{
+                height: 300,
+                borderRadius: 5,
+                borderWidth: 2,
+                borderColor: "#f9f2d0",
+                marginTop: 5,
+                marginBottom: 5,
+              }}
             />
-          </View>
+            <TouchableOpacity
+              onPress={() => this._onPressImage()}
+              style={styles.addPhotoButton}
+            >
+              <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                <Ionicons size={20} name={'ios-add-circle-outline'} color="#929191" style={{ marginRight: 5 }} />
+                <Text style={{ fontSize: 18, fontWeight: '500', color: '#929191' }}> 그림/파일 첨부 </Text>
+              </View>
+            </TouchableOpacity>
         </CardSection>
-        <CardSection>
-          <Button onPress={this.onSendPressed.bind(this)}>전송</Button>
-        </CardSection>
-      </Card>
+
+        <Image source={this.state.hackathonImage} style={{ width: 50, height: 50 }} />
+
+        <TouchableOpacity onPress={this.onSendPressed.bind(this)} style={styles.buttonStyle}>
+          <Text style={{ fontSize: 30, fontWeight: '500', color: 'white' }}>
+            작성 완료
+          </Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
+
+const styles={
+  buttonStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fbdf5d',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    height: 60,
+    width: Dimensions.get('window').width
+
+  },
+  addPhotoButton: {
+    width: 150,
+    height: 30,
+    backgroundColor: '#f9f2d0',
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: 'white',
+    paddingLeft: 5,
+    paddingRight: 5 
+  }
+};
 
 export default connect(null, { postPush })(NoticeWrite);

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { CheckBox } from "react-native-elements";
-import { Card, CardSection, Button, Input, Spinner, DoubleInput, Confirm } from "./common";
+import ModalDropdown from 'react-native-modal-dropdown';
 import { connect } from "react-redux";
+
+import { Card, CardSection, Button, Input, Spinner, DoubleInput, Confirm } from "./common";
 import {
   aptChanged,
   dongChanged,
@@ -16,7 +18,7 @@ import {
 } from "../actions";
 
 class Authentication extends Component {
-  state = { checked: false, showModal: false, dongAuthCheck: false };
+  state = { checked: false, showModal: false, dongAuthCheck: false, domain: 'default.com' };
 
   //TEMPORARY
   onAptChange(text) {
@@ -68,7 +70,7 @@ class Authentication extends Component {
     if (password === password_check) {
       if (this.state.dongAuthCheck) {
         if (this.state.checked) {
-          this.props.signInUser({ apt, dong, hosu, nickname, email, password });
+          this.props.signInUser({ apt, dong, hosu, nickname, email: email.concat("@").concat(this.state.domain), password });
         } else {
           this.setState({ showModal: true });
         }
@@ -111,10 +113,10 @@ class Authentication extends Component {
 
   render() {
     return (
-      <View style={{ backgroundColor: 'rgba(255, 255, 150, 0.3)', flex: 1 }}>
+      <View style={{ backgroundColor: '#f9f7e2', flex: 1 }}>
 
         <Text style={styles.titleText}>주거 정보</Text>
-        <Card style={{ marginTop: 3 }} >
+        <Card style={{ backgroundColor: '#eeeeee', marginTop: 3 }} >
           <CardSection>
             <Input
               label="아파트"
@@ -152,7 +154,7 @@ class Authentication extends Component {
         </Card>
 
         <Text style={styles.titleText}>로그인 정보</Text>
-        <Card style={{ marginTop: 3 }}>
+        <Card style={{ backgroundColor: '#eeeeee', marginTop: 3 }}>
           <CardSection>
             <Input
               label="닉네임"
@@ -162,12 +164,27 @@ class Authentication extends Component {
             />
           </CardSection>
 
-          <CardSection>
+          <CardSection style={{ alignItems: 'center' }}>
             <Input
+              inputStyle={{ marginRight: 0, flex: 1.5 }}
               label="이메일"
               placeholder="email@gmail.com"
               value={this.props.email}
               onChangeText={this.onEmailChange.bind(this)}
+            />
+            <Text style={{ fontSize: 18 }}> @ </Text>
+            <ModalDropdown
+              textStyle={{ fontSize: 18 }}
+              style={{
+                marginRight: 9,
+                paddingLeft: 5,
+                paddingRight: 5,
+                borderRadius: 3,
+                borderWidth: 1,
+              }}
+              options={['naver.com', 'gmail.com', 'hanmail.net', 'daum.net', 'korea.ac.kr']}
+              defaultValue='이메일 선택'
+              onSelect={(idx, value) => this.setState({ domain: value })}
             />
           </CardSection>
 
@@ -257,6 +274,8 @@ const styles = {
     paddingTop: 5,
     paddingLeft: 15,
     fontSize: 16,
+    color: '#787772',
+    fontWeight: 'bold'
   },
 
   buttonTextStyle: {
@@ -275,6 +294,7 @@ const styles = {
     borderRadius: 5,
     marginLeft: 5,
     marginRight: 5,
+    marginTop: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,

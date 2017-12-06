@@ -165,7 +165,7 @@ const RouterComponent = () => {
             />
             <Scene
               key="notice_write"
-              title="글 쓰기"
+              title="게시글 작성"
               component={NoticeWrite}
             />
             <Scene
