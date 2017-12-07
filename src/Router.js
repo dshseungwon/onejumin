@@ -1,6 +1,6 @@
 // Modules
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Stack, Scene, Router, Actions } from 'react-native-router-flux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -19,13 +19,20 @@ import NoticeHome from './components/notice/NoticeHome';
 import NoticeRead from './components/notice/NoticeRead';
 import NoticeWrite from './components/notice/NoticeWrite';
 
+import ProposalHome from './components/proposal/ProposalHome';
+import infoBoardHome from './components/infoBoard/infoBoardHome';
+import freeBoardHome from './components/freeBoard/freeBoardHome';
+
 import ContentView from './components/ContentView';
 
-const NavBarTitle = ({ onPress, logoImage }) => {
+const NavBarTitle = ({ onPress }) => {
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity onPress={onPress}>
-        <Text>ONE주민</Text>
+      <Image
+          source={require('./images/MainLogo.png')}
+          style={{ width: 130, height: 40, marginTop: 10 }}
+      />
       </TouchableOpacity>
     </View>
   );
@@ -66,6 +73,7 @@ const RouterComponent = () => {
         <Stack key="auth">
           <Scene
             title="주민인증"
+            titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
             component={Authentication}
  
           />
@@ -77,6 +85,7 @@ const RouterComponent = () => {
             <Scene
               initial
               title="ONE주민"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Main}
               renderLeftButton={() =>
                 <LeftNavButton onPress={() => Actions.myPage()} iconName='ios-contact-outline' />
@@ -89,42 +98,50 @@ const RouterComponent = () => {
             <Scene
               key="myPage"
               title="마이페이지"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={MyPage}
             />
             <Scene
               key="myPage_exit"
               title="이사 및 탈퇴"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
             <Scene
               key="myPage_logout"
               title="로그아웃"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
 
             <Scene
               key="setting"
               title="설정"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Setting}
             />
             <Scene
               key="myPage_info"
               title="앱 정보"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
             <Scene
               key="myPage_rule"
               title="커뮤니티 이용규칙"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
             <Scene
               key="myPage_personalInfo"
               title="개인정보 처리방침"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
             <Scene
               key="myPage_license"
               title="오픈소스 라이센스"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
           </Scene>
@@ -166,43 +183,49 @@ const RouterComponent = () => {
             <Scene
               key="notice_write"
               title="게시글 작성"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={NoticeWrite}
             />
             <Scene
               key="notice_read"
               title="$제목 없음"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={NoticeRead}
             />
             <Scene
               key="contentView"
               title="공지사항"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={ContentView}
             />
           </Scene>
 
           <Scene key="proposal">
             <Scene
-              key="proposal_list"
+              initial
               renderTitle={() =>
                 <NavBarTitle
                   onPress={() => Actions.main()}
                 />
               }
-              component={Intro}
+              component={ProposalHome}
             />
             <Scene
-              key="proposal_write"
-              title="글 쓰기"
-              component={Intro}
+              key="notice_write"
+              title="게시글 작성"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
+              component={NoticeWrite}
             />
             <Scene
               key="proposal_read"
               title="$제목 없음"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
             <Scene
               key="contentView"
-              title="$제목 없음"
+              title="건의사항"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={ContentView}
             />
           </Scene>
@@ -215,17 +238,25 @@ const RouterComponent = () => {
                   onPress={() => Actions.main()}
                 />
               }
-              component={Intro}
+              component={freeBoardHome}
             />
             <Scene
-              key="freeBoard_write"
-              title="글 쓰기"
-              component={Intro}
+              key="notice_write"
+              title="게시글 작성"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
+              component={NoticeWrite}
             />
             <Scene
               key="freeBoard_read"
               title="제목 없음"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
+            />
+            <Scene
+              key="contentView"
+              title="건의사항"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
+              component={ContentView}
             />
           </Scene>
 
@@ -237,17 +268,25 @@ const RouterComponent = () => {
                   onPress={() => Actions.main()}
                 />
               }
-              component={Intro}
+              component={infoBoardHome}
             />
             <Scene
-              key="infoBoard_write"
-              title="글 쓰기"
-              component={Intro}
+              key="notice_write"
+              title="게시글 작성"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
+              component={NoticeWrite}
             />
             <Scene
               key="infoBoard_read"
               title="제목 없음"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
+            />
+            <Scene
+              key="contentView"
+              title="건의사항"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
+              component={ContentView}
             />
           </Scene>
 
@@ -264,11 +303,13 @@ const RouterComponent = () => {
             <Scene
               key="market_write"
               title="글 쓰기"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
             <Scene
               key="market_read"
               title="제목 없음"
+              titleStyle={{ fontSize: 20, color: 'white', fontWeight: '600' }}
               component={Intro}
             />
           </Scene>

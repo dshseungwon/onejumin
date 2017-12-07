@@ -18,7 +18,7 @@ import {
 } from "../actions";
 
 class Authentication extends Component {
-  state = { checked: false, showModal: false, dongAuthCheck: false, domain: 'default.com' };
+  state = { checked: true, showModal: false, dongAuthCheck: false, domain: 'default.com' };
 
   //TEMPORARY
   onAptChange(text) {

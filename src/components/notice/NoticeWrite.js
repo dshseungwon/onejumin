@@ -160,6 +160,24 @@ class NoticeWrite extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const {
+    apt,
+    dong,
+    hosu,
+    nickname,
+    email,
+  } = state.auth;
+
+  return {
+    apt,
+    dong,
+    hosu,
+    nickname,
+    email,
+  };
+};
+
 const styles={
   buttonStyle: {
     flex: 1,

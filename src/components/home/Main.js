@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
-import { HomeIcon } from '../common';
+import { HomeIcon, AlertModal } from '../common';
 
 import HomeNotice from './HomeNotice';
 
@@ -29,6 +29,16 @@ import MsgSendButton from './MsgSendButton';
 */
 
 class Main extends Component {
+  
+  state = { showModal: false };
+
+  onAccept() {
+    this.setState({ showModal: false });
+  }
+
+  showModal() {
+    this.setState({ showModal: true });
+  }
 
   render() {
     return (
@@ -71,7 +81,7 @@ class Main extends Component {
           </HomeIcon>
 
           <HomeIcon
-            onPress={Actions.notice}
+            onPress={Actions.proposal}
             iconName='ios-construct-outline'
             style={{ backgroundColor: '#b4ceee' }}
           >
@@ -79,7 +89,7 @@ class Main extends Component {
           </HomeIcon>
 
           <HomeIcon
-            onPress={Actions.notice}
+            onPress={Actions.freeBoard}
             iconName='ios-chatboxes-outline'
             style={{ backgroundColor: '#fcc4ce' }}
           >
@@ -98,7 +108,7 @@ class Main extends Component {
         >
 
           <HomeIcon
-            onPress={Actions.notice}
+            onPress={Actions.infoBoard}
             iconName='ios-people-outline'
             style={{ backgroundColor: '#d9c3e1' }}
           >
@@ -106,7 +116,7 @@ class Main extends Component {
           </HomeIcon>
 
           <HomeIcon
-            onPress={Actions.notice}
+            onPress={this.showModal.bind(this)}
             iconName='ios-cart-outline'
             style={{ backgroundColor: '#f7ccaa' }}
           >
@@ -114,7 +124,7 @@ class Main extends Component {
           </HomeIcon>
 
           <HomeIcon
-            onPress={Actions.notice}
+            onPress={this.showModal.bind(this)}
             iconName='ios-thumbs-up-outline'
             style={{ backgroundColor: '#b1b0a7' }}
           >
@@ -122,6 +132,13 @@ class Main extends Component {
           </HomeIcon>
 
         </View>
+
+        <AlertModal
+          visible={this.state.showModal}
+          onAccept={this.onAccept.bind(this)}
+        >
+          본 기능은 개발중입니다.
+        </AlertModal>
 
       </View>
       );

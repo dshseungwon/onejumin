@@ -83,14 +83,16 @@ export const commentFetch = (category, postId) => {
 export const commentPush = (category, postId, comment, numComments) => {
 
   const { uid } = firebase.auth().currentUser;
-  const { content } = comment;
+  const { content, time } = comment;
+
 
   return (dispatch) => {
     firebase.database().ref(`/users/${uid}`).once('value').then((userSnap) => {
       const apt = userSnap.val().apt;
+      const nickname = userSnap.val().nickname;
 
       firebase.database().ref(`/apts/${apt}/${category}/${postId}/comments`)
-      .push().set({ content })
+      .push().set({ nickname, content, time })
         .then(() => {
           console.log('Comment push successed!');
         });
