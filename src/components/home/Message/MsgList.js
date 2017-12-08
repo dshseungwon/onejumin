@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView } from 'react-native';
+import { ListView, View } from 'react-native';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
@@ -48,7 +48,11 @@ class MsgList extends Component {
 
 
   renderRow(msg) {
-    return <MsgItem msg={msg} />;
+  return (
+    <View style={{ flex: 1, backgroundColor: '#f9f2d0', marginLeft: 10, marginRight: 10 }}>
+      <MsgItem msg={msg} />
+    </View>
+  );
   }
 
 

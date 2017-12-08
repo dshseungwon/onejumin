@@ -14,7 +14,6 @@ class ListItem extends Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
-
         <View style={styles.cardStyle}>
           <View style={{ flexDirection: 'row', marginBottom: 5 }}>
             <Ionicons size={50} name={'ios-contact-outline'} style={{ marginLeft: 10, marginRight: 10 }} />
@@ -68,7 +67,7 @@ const styles = {
   cardStyle: {
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#fff100',
+    borderColor: "#fff100",
     backgroundColor: '#ffffff',
 
     paddingLeft: 3,

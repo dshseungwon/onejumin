@@ -33,7 +33,9 @@ class PostList extends Component {
 
 
   renderRow(post) {
-    return <ListItem post={post} category={this.props.category} />;
+    return (
+      <ListItem post={post} category={this.props.category} />
+    );
   }
 
 

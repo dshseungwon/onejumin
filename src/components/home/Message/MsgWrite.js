@@ -89,24 +89,25 @@ class MsgWrite extends Component {
 
   sendMsgPush() {
     const { currentUser } = firebase.auth();
-    const { dong, hosu, msg } = this.state;
+    const { dong, hosu, msg, title, time, images, numImage } = this.state;
 
     firebase
       .database()
       .ref(`/users/${currentUser.uid}/message/sendMsg`)
       .push()
-      .set({ dong, hosu, msg })
+      .set({ dong, hosu, msg, title, time, images, numImage })
       .then(() => {
         console.log("sendMsg push successed!");
       });
   }
 
   recvMsgPush() {
-    const { dong, hosu, msg } = this.state;
+    const { dong, hosu, msg, title, time, images, numImage } = this.state;
     const { uid } = firebase.auth().currentUser;
 
     let senderDong = "999";
     let senderHosu = "999";
+    let senderNickname = "홍길동";
 
     firebase
       .database()
@@ -115,26 +116,36 @@ class MsgWrite extends Component {
       .then(userSnap => {
         senderDong = userSnap.val().dong;
         senderHosu = userSnap.val().hosu;
-      });
+        senderNickname = userSnap.val().nickname;
 
-    firebase
-      .database()
-      .ref("/users")
-      .orderByChild("dong")
-      .on("child_added", snapshot => {
-        const dongFiltered = { ...snapshot.val(), uid: snapshot.key };
-        console.log(dongFiltered);
+        firebase
+          .database()
+          .ref("/users")
+          .orderByChild("dong")
+          .on("child_added", snapshot => {
+            const dongFiltered = { ...snapshot.val(), uid: snapshot.key };
+            console.log(dongFiltered);
 
-        if (dongFiltered.hosu === `${hosu}`) {
-          console.log(dongFiltered);
+            if (dongFiltered.hosu === `${hosu}`) {
+              console.log(dongFiltered);
 
-          firebase
-            .database()
-            .ref(`/users/${dongFiltered.uid}/message/recvMsg`)
-            .push()
-            .set({ dong: senderDong, hosu: senderHosu, msg });
-          console.log("recvMsg push successed!");
-        }
+              firebase
+                .database()
+                .ref(`/users/${dongFiltered.uid}/message/recvMsg`)
+                .push()
+                .set({
+                  dong: senderDong,
+                  hosu: senderHosu,
+                  nickname: senderNickname,
+                  msg,
+                  title,
+                  time,
+                  images,
+                  numImage
+                });
+              console.log("recvMsg push successed!");
+            }
+          });
       });
   }
 
@@ -189,12 +200,12 @@ class MsgWrite extends Component {
   }
 
   upZipPatch() {
-    const newHosu = parseInt(this.props.authHosu) + 100 + '';
+    const newHosu = parseInt(this.props.authHosu) + 100 + "";
     this.setState({ dong: this.props.authDong, hosu: newHosu });
   }
 
   downZipPatch() {
-    const newHosu = parseInt(this.props.authHosu) - 100 + '';
+    const newHosu = parseInt(this.props.authHosu) - 100 + "";
     this.setState({ dong: this.props.authDong, hosu: newHosu });
   }
 
@@ -206,21 +217,27 @@ class MsgWrite extends Component {
         >
           <View style={{ flexDirection: "row" }}>
             <Input
-              inputStyle={{ borderColor: '#f9f2d0' }}
+              inputStyle={{ borderColor: "#f9f2d0" }}
               label="동"
               value={this.state.dong}
               onChangeText={this.onDongChange.bind(this)}
             />
             <Input
-              inputStyle={{ borderColor: '#f9f2d0' }}
+              inputStyle={{ borderColor: "#f9f2d0" }}
               label="호"
               value={this.state.hosu}
               onChangeText={this.onHosuChange.bind(this)}
             />
-            <TouchableOpacity onPress={this.upZipPatch.bind(this)} style={styles.zipButtonStyle}>
+            <TouchableOpacity
+              onPress={this.upZipPatch.bind(this)}
+              style={styles.zipButtonStyle}
+            >
               <Text style={styles.zipButtonTextStyle}>#윗집</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.downZipPatch.bind(this)} style={styles.zipButtonStyle}>
+            <TouchableOpacity
+              onPress={this.downZipPatch.bind(this)}
+              style={styles.zipButtonStyle}
+            >
               <Text style={styles.zipButtonTextStyle}>#아랫집</Text>
             </TouchableOpacity>
           </View>
@@ -299,12 +316,7 @@ class MsgWrite extends Component {
 }
 
 const mapStateToProps = state => {
-  const {
-    apt,
-    dong,
-    hosu,
-    nickname
-  } = state.auth;
+  const { apt, dong, hosu, nickname } = state.auth;
 
   return {
     authApt: apt,
@@ -316,18 +328,18 @@ const mapStateToProps = state => {
 
 const styles = {
   zipButtonStyle: {
-    backgroundColor: '#f9f2d0',
+    backgroundColor: "#f9f2d0",
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 10,
     paddingLeft: 5,
     paddingRight: 5
   },
   zipButtonTextStyle: {
     fontSize: 20,
-    color: '#929191',
-    fontWeight: '500'
+    color: "#929191",
+    fontWeight: "500"
   },
   buttonStyle: {
     flex: 1,
