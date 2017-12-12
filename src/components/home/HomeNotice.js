@@ -15,7 +15,8 @@ const HomeNotice = ({ iconName, style }) => {
           </View>
 
           <View style={innerBoxStyle}>
-            <Text style={{ marginTop: 3 }}> Something </Text>
+            <Text style={{ marginTop: 3 }}> 시설물 보수 공사 예정 12/23 </Text>
+            <Text style={{ marginTop: 3 }}> 엘리베이터 수리 예정 12/25 </Text>
           </View>
         </View>
       </View>

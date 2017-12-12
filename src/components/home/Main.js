@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
@@ -140,6 +140,14 @@ class Main extends Component {
           본 기능은 개발중입니다.
         </AlertModal>
 
+        <Image
+          source={require('../../images/advertisement.png')}
+          style={{
+            width: null,
+            height: 50,
+            marginTop: 20,
+          }}
+        />
       </View>
       );
     }

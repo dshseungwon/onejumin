@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "apts": {
+      "$aptid": {
+        ".read": "$aptid === auth.uid.apt",
+        ".write": "$aptid === auth.uid.apt"
+      }
+    }
+  }
+}

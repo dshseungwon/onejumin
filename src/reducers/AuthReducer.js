@@ -13,14 +13,14 @@ import {
 } from '../actions/types';
 
  const INITIAL_STATE = {
-   apt: '푸르지오',
-   dong: '123',
-   hosu: '321',
-   dong_auth: '123000',
-   nickname: 'Seungwon Ju',
-   email: 'kusw',
-   password: 'password',
-   password_check: 'password',
+   apt: '',
+   dong: '',
+   hosu: '',
+   dong_auth: '',
+   nickname: '',
+   email: '',
+   password: '',
+   password_check: '',
    loading: false,
  };
 
