@@ -49,7 +49,7 @@ import {
       return {...state, loading: true};
 
     case SIGNIN_USER_SUCCESS:
-      return {...state, ...INITIAL_STATE };
+      return {...state };
     case SIGNIN_USER_FAIL:
       return {...state, dong_auth: '', loading: false};
 

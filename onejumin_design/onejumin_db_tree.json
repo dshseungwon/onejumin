@@ -1,0 +1,64 @@
+[Onejumin firebase database diagram]
+
+
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
+
+onejumin
+|
+|-------------------------------------------------------------------------------------
+|                               |                          |            |           | 
+users                           apts                 
+  |                             |                  
+  |-uid                         |- aptId: Integer       
+     |- aptid: Integer               |- name: String
+     |- dong: Integer                |- location: String
+     |                               |- region: Integer
+     |- hosu: Integer                |- maxDong: Integer 
+     |- nickname: String             |- maxHosu: Integer
+     |- email: String                |- freeBoard
+     |                               |    |- postId
+     |                               |         |- dong: String
+     |                               |         |- nickname: String
+     |                               |         |- title: String
+     |                               |         |- content: String
+     |                               |         |- like: Integer
+     |                               |         |- time: Integer
+     |                               |         |- numComments: Integer
+     |                               |         |- comments
+     |                               |              |- cmtid
+     |                               |              |    |- content
+     |                               |              |    |- like
+     |                               |              |
+     |                               |              |- cmtid
+     |                               |               
+     |- password: String             |- infoBoard // Same with freeBoard
+     |- message                      |- market // Same with freeBoard
+         |- sendMsg                  |- notice // Same with freeBoard
+         |     |- msgId              |- proposal // Same with freeBoard
+         |     |    |
+         |     |    |- dong: String
+         |     |    |- hosu: String
+         |     |    |- time: Integer
+         |     |    |- title: String
+         |     |    |- content: String
+         |     |    
+         |     |- msgId
+         |
+         |- recvMsg
+               |- msgId
+               |    |- senderDong: String
+               |    |- senderHosu: String  
+               |    |- time: Integer
+               |    |- title: String
+               |    |- content: String
+               |    
+               |- msgId     

@@ -4,7 +4,13 @@
     // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
     "version": "0.2.0",
     "configurations": [
-
+        {
+            "name": "RN Launch Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8081/debugger-ui",
+            "webRoot": "${workspaceRoot}/.vscode/launchReactNative.js"
+        },
         {
             "name": "RN Debug iOS",
             "program": "${workspaceRoot}/.vscode/launchReactNative.js",
@@ -22,13 +28,6 @@
             "platform": "android",
             "sourceMaps": true,
             "outDir": "${workspaceRoot}/.vscode/.react"
-        },
-        {
-            "name": "RN Launch Chrome",
-            "type": "chrome",
-            "request": "launch",
-            "url": "http://localhost:8081/debugger-ui",
-            "webRoot": "${workspaceRoot}/.vscode/launchReactNative.js"
         },
         {
             "type": "node",

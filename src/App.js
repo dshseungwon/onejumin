@@ -15,9 +15,11 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
 
+const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 class App extends Component {
 
+  
   componentWillMount() {
     const config = {
       apiKey: "AIzaSyDZca6cXcM-wMb9dIJvD3OaF0G1s5gI06U",
@@ -29,10 +31,11 @@ class App extends Component {
     };
 
     firebase.initializeApp(config);
+    
   }
 
   render() {
-    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
     return (
       <Provider store={store}>
         <Router />
